@@ -15,11 +15,13 @@ public class AmazonStepdefinitions {
 
     @Given("kullanici amazon anasayfaya gider")
     public void kullanici_amazon_anasayfaya_gider() {
+
         Driver.getDriver().get(ConfigReader.getProperty("amazonUrl"));
     }
 
     @Then("amazon arama kutusuna Nutella yazip aratir")
     public void amazon_arama_kutusuna_nutella_yazip_aratir() {
+
         amazonPage= new AmazonPage();
         amazonPage.amazonAramaKutusu.sendKeys("Nutella" + Keys.ENTER);
     }
@@ -29,7 +31,6 @@ public class AmazonStepdefinitions {
 
         String actualAramaSonucu= amazonPage.AmazonAramaSonucuElementi.getText();
         String expectedKelime="Nutella";
-
         Assert.assertTrue(actualAramaSonucu.contains(expectedKelime));
     }
 
@@ -51,7 +52,6 @@ public class AmazonStepdefinitions {
 
         String actualAramaSonucu= amazonPage.AmazonAramaSonucuElementi.getText();
         String expectedKelime="Java";
-
         Assert.assertTrue(actualAramaSonucu.contains(expectedKelime));
     }
 
@@ -87,7 +87,7 @@ public class AmazonStepdefinitions {
         amazonPage.amazonAramaKutusu.sendKeys(aranacakKelime + Keys.ENTER);
     }
 
-    @And("amazon sonuclarinin {string} icerdigini test eder")
+    @And("arama sonuclarinin {string} icerdigini test eder")
     public void aramaSonuclarininIcerdiginiTestEder(String arananKelime) {
 
         String actualAramaSonucu= amazonPage.AmazonAramaSonucuElementi.getText();
@@ -95,4 +95,18 @@ public class AmazonStepdefinitions {
     }
 
 
+    @Given("kullanici {string} anasayfaya gider")
+    public void kullaniciAnasayfayaGider(String istenenUrl) {
+
+        Driver.getDriver().get(ConfigReader.getProperty(istenenUrl));
+    }
+
+
+    @Then("url de {string} oldugunu test eder")
+    public void urlDeOldugunuTestEder(String arananKelime) {
+
+        String actualUrl=Driver.getDriver().getCurrentUrl();
+
+        Assert.assertTrue(actualUrl.contains(arananKelime));
+    }
 }
